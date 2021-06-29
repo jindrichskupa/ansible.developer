@@ -1,0 +1,30 @@
+---
+- name: Create 'sudodev' group for developers sudo
+  group:
+    name: sudodev
+    state: present
+
+- name: Add/remove developers accounts to server
+  user:
+    name: "{{ item.login }}"
+    comment: "{{ item.name }}"
+    groups: "{{ item.groups }}"
+    state: "{{ item.state }}"
+  with_items: "{{ developers }}"
+
+- name: Add developers keys to server
+  authorized_key:
+    user: "{{ item.login }}"
+    key: "https://{{ github_base_url }}/{{ item.github }}.keys"
+    comment: "{{ item.name }}"
+    exclusive: true
+  with_items: "{{ developers }}"
+  when: item.state == "present" and item.github is defined
+
+- name: Allow 'sudodev' group to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%sudodev'
+    line: '%sudodev ALL=(ALL) NOPASSWD: ALL'
+    validate: visudo -cf %s

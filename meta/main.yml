@@ -1,0 +1,23 @@
+galaxy_info:
+  author: Jindrich Skupa
+  description: Manage user accounts, ssh keys and sudo for server users
+  company: Enrian Partners a.s.
+
+  # issue_tracker_url: http://example.com/issue/tracker
+
+  license: MIT
+
+  min_ansible_version: 2.4
+
+  platforms:
+    - name: Debian
+      versions:
+      - buster
+
+  galaxy_tags:
+    - sudo
+    - user
+    - system
+    - keys
+
+dependencies: []
