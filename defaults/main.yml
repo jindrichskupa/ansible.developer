@@ -1,3 +1,4 @@
 ---
 # defaults file for developer
 github_base_url: https://github.com
+user_shell: /bin/bash

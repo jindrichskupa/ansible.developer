@@ -10,7 +10,7 @@
     comment: "{{ item.name }}"
     groups: "{{ item.groups }}"
     state: "{{ item.state }}"
-    shell: "{{ item.shell | default('/bin/bash') }}"
+    shell: "{{ item.shell | default(user_shell) }}"
   with_items: "{{ developers }}"
 
 - name: Add developers keys to server
