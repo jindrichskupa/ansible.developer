@@ -22,6 +22,15 @@
   with_items: "{{ developers }}"
   when: item.state == "present" and item.github is defined
 
+- name: Add developers keys to server
+  authorized_key:
+    user: "{{ item.login }}"
+    key: "{{ item.public_key }}"
+    comment: "{{ item.name }}"
+    exclusive: true
+  with_items: "{{ developers }}"
+  when: item.state == "present" and item.public_key is defined
+
 - name: Allow 'sudodev' group to have passwordless sudo
   lineinfile:
     dest: /etc/sudoers
